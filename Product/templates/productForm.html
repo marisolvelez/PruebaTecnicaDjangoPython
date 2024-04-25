@@ -1,0 +1,32 @@
+<br>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+<br>
+<form method="PUT" action="{% if product_data.id %}{% url 'product-retrieve-update-destroy' product_data.id %}{% else %}{% url 'productsForm' %}{% endif %}">
+    {% csrf_token %}
+    {% if product_data.id %}
+        <!-- Enviar el método PUT para actualizar el producto existente -->
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="product_id" value="{{ product_data.id }}">
+    {% endif %}
+    <label for="name_product">Name:</label>
+    <input type="text" name="name_product" value="{{ product_data.name_product }}" />
+    <br><br>
+    <label for="description">Description:</label>
+    <input type="text" name="description" value="{{ product_data.description }}" />
+    <br><br>
+    <label for="price">Price:</label>
+    <input type="text" name="price" value="{{ product_data.price }}" />
+    <br><br>
+    <label for="stock">Stock:</label>
+    <input type="text" name="stock" value="{{ product_data.stock }}" />
+    <br><br>
+    
+    <input type="submit" value="{% if product_data.id %}Update{% else %}Create{% endif %}" />
+
+</form>
